@@ -28,11 +28,18 @@ run_left = [
     pygame.image.load('images/left/left_4.png'),
 ]
 
+player_speed = 10
+player_x = 100
+player_y = 500
+
+is_jump = False
+jump_count = 10
+
 player_animation_count = 0
 bg_x = 0
 
 background_sound = pygame.mixer.Sound('sounds/fon.mp3')
-background_sound.play()
+#background_sound.play()
 
 #game loop
 running = True
@@ -41,7 +48,33 @@ while running:
     screen.blit(background,(bg_x, 0))
     screen.blit(background,(bg_x + 1280, 0))
 
-    screen.blit(run_right[player_animation_count], (200, 500))
+
+    keys = pygame.key.get_pressed()
+
+    if keys[pygame.K_a]:
+        screen.blit(run_left[player_animation_count], (player_x, player_y))
+    else:
+        screen.blit(run_right[player_animation_count], (player_x, player_y))
+
+    if keys[pygame.K_a] and player_x > 30:
+        player_x -= player_speed
+    elif keys[pygame.K_d] and player_x < 700:
+        player_x += player_speed
+
+    if not is_jump:
+      if keys[pygame.K_SPACE]:
+          is_jump = True
+    else:
+        if jump_count >= -10:
+            if jump_count > 0:
+                player_y -= (jump_count ** 2)/2
+            else:
+                player_y += (jump_count ** 2)/2
+            jump_count -= 1
+        else:
+            is_jump = False
+            jump_count = 10
+
     if player_animation_count == 3:
         player_animation_count = 0
     else:
@@ -57,5 +90,5 @@ while running:
             running = False
             pygame.quit()
 
-    clock.tick(9)
+    clock.tick(10)
 
