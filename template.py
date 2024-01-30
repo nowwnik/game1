@@ -55,6 +55,14 @@ background_sound = pygame.mixer.Sound('sounds/fon.mp3')
 poop_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(poop_timer, 3500)
 
+label = pygame.font.Font('fonts/Impact.ttf', 80)
+lose_label = label.render('ЛОХ ЕБАНЫЙ!', False, (255, 0, 0))
+restar_label = label.render('не обосраться', False, (255, 100, 0))
+restar_label_rect = restar_label.get_rect(topleft=(420, 300))
+
+
+gameplay = True
+
 # game loop
 running = True
 while running:
@@ -62,50 +70,66 @@ while running:
     screen.blit(background, (bg_x, 0))
     screen.blit(background, (bg_x + 1280, 0))
 
-    player_rect = run_left[0].get_rect(topleft=(player_x, player_y))
+    if gameplay:
+        player_rect = run_left[0].get_rect(topleft=(player_x, player_y))
 
-    if poop_list:
-        for element in poop_list:
-            screen.blit(poo, element)
-            element.x -= 10
 
-            if player_rect.colliderect(element):
-                print("ты лох")
+        if poop_list:
+            for (i, element) in enumerate(poop_list):
+                screen.blit(poo, element)
+                element.x -= 10
 
-    keys = pygame.key.get_pressed()
+                if element.x < -10:
+                    poop_list.pop(i)
 
-    if keys[pygame.K_a]:
-        screen.blit(run_left[player_animation_count], (player_x, player_y))
-    else:
-        screen.blit(run_right[player_animation_count], (player_x, player_y))
+                if player_rect.colliderect(element):
+                    gameplay = False
 
-    if keys[pygame.K_a] and player_x > 30:
-        player_x -= player_speed
-    elif keys[pygame.K_d] and player_x < 700:
-        player_x += player_speed
+        keys = pygame.key.get_pressed()
 
-    if not is_jump:
-        if keys[pygame.K_SPACE]:
-            is_jump = True
-    else:
-        if jump_count >= -10:
-            if jump_count > 0:
-                player_y -= (jump_count ** 2) / 2
-            else:
-                player_y += (jump_count ** 2) / 2
-            jump_count -= 1
+        if keys[pygame.K_a]:
+            screen.blit(run_left[player_animation_count], (player_x, player_y))
         else:
-            is_jump = False
-            jump_count = 10
+            screen.blit(run_right[player_animation_count], (player_x, player_y))
 
-    if player_animation_count == 3:
-        player_animation_count = 0
+        if keys[pygame.K_a] and player_x > 30:
+            player_x -= player_speed
+        elif keys[pygame.K_d] and player_x < 700:
+            player_x += player_speed
+
+        if not is_jump:
+            if keys[pygame.K_SPACE]:
+                is_jump = True
+        else:
+            if jump_count >= -10:
+                if jump_count > 0:
+                    player_y -= (jump_count ** 2) / 2
+                else:
+                    player_y += (jump_count ** 2) / 2
+                jump_count -= 1
+            else:
+                is_jump = False
+                jump_count = 10
+
+        if player_animation_count == 3:
+            player_animation_count = 0
+        else:
+            player_animation_count += 1
+
+        bg_x -= 8
+        if bg_x == -1280:
+            bg_x = 0
+
     else:
-        player_animation_count += 1
+        screen.fill((0, 0, 0))
+        screen.blit(lose_label, (440, 150))
+        screen.blit(restar_label, restar_label_rect)
 
-    bg_x -= 8
-    if bg_x == -1280:
-        bg_x = 0
+        mouse = pygame.mouse.get_pos()
+        if restar_label_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[0]:
+            gameplay = True
+            player_x = 100
+            poop_list.clear()
 
     # отрисовка
     pygame.display.update()
