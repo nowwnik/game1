@@ -7,7 +7,7 @@ clock = pygame.time.Clock()
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 # убрать рамку flags=pygame.NOFRAME
-pygame.display.set_caption("My game MF")
+pygame.display.set_caption("POOP MASTER")
 icon = pygame.image.load('images/1671710.jpg').convert()
 pygame.display.set_icon(icon)
 
@@ -56,10 +56,13 @@ poop_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(poop_timer, 3500)
 
 label = pygame.font.Font('fonts/Impact.ttf', 80)
-lose_label = label.render('ЛОХ ЕБАНЫЙ!', False, (255, 0, 0))
-restar_label = label.render('не обосраться', False, (255, 100, 0))
+lose_label = label.render('ЛОХ!', False, (255, 0, 0))
+restar_label = label.render('не обосраться снова', False, (255, 100, 0))
 restar_label_rect = restar_label.get_rect(topleft=(420, 300))
 
+bullets_left = 5
+bullet = pygame.image.load('images/bulet.png').convert_alpha()
+bullets = []
 
 gameplay = True
 
@@ -70,9 +73,15 @@ while running:
     screen.blit(background, (bg_x, 0))
     screen.blit(background, (bg_x + 1280, 0))
 
+    x = 0
     if gameplay:
         player_rect = run_left[0].get_rect(topleft=(player_x, player_y))
 
+        if bullets_left > 0:
+            for i in range(0,bullets_left):
+                screen.blit(bullet, (x, 0))
+                x += 45
+                i+=1
 
         if poop_list:
             for (i, element) in enumerate(poop_list):
@@ -120,6 +129,25 @@ while running:
         if bg_x == -1280:
             bg_x = 0
 
+        if pygame.mouse.get_pressed()[0] and bullets_left > 0:
+            bullets.append(bullet.get_rect(topleft=(player_x + 30, player_y + 70)))
+
+            bullets_left -= 1
+
+        if bullets:
+            for (i, element) in enumerate(bullets):
+                screen.blit(bullet, (element.x, element.y))
+                element.x += 10
+
+                if element.x > 1280:
+                    bullets.pop(i)
+
+                if poop_list:
+                    for (index, poop) in enumerate(poop_list):
+                        if element.colliderect(poop):
+                            poop_list.pop(index)
+                            bullets.pop(i)
+
     else:
         screen.fill((0, 0, 0))
         screen.blit(lose_label, (440, 150))
@@ -130,6 +158,8 @@ while running:
             gameplay = True
             player_x = 100
             poop_list.clear()
+            bullets.clear()
+            bullets_left = 5
 
     # отрисовка
     pygame.display.update()
