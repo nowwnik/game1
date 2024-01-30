@@ -1,3 +1,5 @@
+import random
+
 import pygame
 
 clock = pygame.time.Clock()
@@ -11,8 +13,6 @@ pygame.display.set_icon(icon)
 
 background = pygame.image.load('images/background1.jpg').convert_alpha()
 
-poo = pygame.image.load('images/poo/poo1.png').convert_alpha()
-
 poops = [
     pygame.image.load('images/poo/poo1.png').convert_alpha(),
     pygame.image.load('images/poo/poo2.png').convert_alpha(),
@@ -21,6 +21,8 @@ poops = [
     pygame.image.load('images/poo/poo5.png').convert_alpha(),
     pygame.image.load('images/poo/poo6.png').convert_alpha(),
 ]
+
+poo = random.choice(poops)
 
 poop_list = []
 
@@ -113,6 +115,6 @@ while running:
             running = False
             pygame.quit()
         if event.type == poop_timer:
-            poop_list.append(poo.get_rect(topleft=(1200, 580)))
+            poop_list.append(poo.get_rect(topleft=(1200, 570)))
     # типа фреймтайм
     clock.tick(10)
