@@ -1,38 +1,26 @@
 import pygame
-import random
-
-WIDTH = 600 #ширина окна
-HEIGHT = 400 #высота окна
-FPS = 30 #фреймтайм
-
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-class Player(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((50, 50))
-        self.image.fill(WHITE)
-        self.rect = self.image.get_rect()
-        self.rect.center = (WIDTH / 2, HEIGHT / 2)
-
 
 pygame.init()
-pygame.mixer.init() #звук
-screen = pygame.display.set_mode((WIDTH,HEIGHT))
-pygame.display.set_caption("It's MY game MF")
-clock = pygame.time.Clock()
-
-all_sprites = pygame.sprite.Group()
-player = Player()
-all_sprites.add(player)
-all_sprites.draw(screen)
+screen = pygame.display.set_mode((600, 400))
+#убрать рамку flags=pygame.NOFRAME
+pygame.display.set_caption("My game MF")
+icon = pygame.image.load('images/1671710.jpg')
+pygame.display.set_icon(icon)
 
 #game loop
 running = True
 while running:
-    clock.tick(FPS)
-    for event in pygame.event.get():
 
+    #screen.fill((255, 0, 0))
+
+    pygame.display.update()
+
+    for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    pygame.display.flip()
+            pygame.quit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_f:
+                screen.fill((255, 0, 0))
+
+
