@@ -9,19 +9,19 @@ screen = pygame.display.set_mode((1280, 720))  # оперделение игро
 # убрать рамку flags=pygame.NOFRAME
 
 pygame.display.set_caption("POOP MASTER")  # название окна
-icon = pygame.image.load('images/1671710.jpg').convert()  # игровая иконка
+icon = pygame.image.load('OneDrive/Документы/GitHub/game1/images/1671710.jpg').convert()  # игровая иконка
 pygame.display.set_icon(icon)  # шоб иконка работала
 
-background = pygame.image.load('images/background1.jpg').convert_alpha()  # задник
+background = pygame.image.load('OneDrive/Документы/GitHub/game1/images/background1.jpg').convert_alpha()  # задник
 
 # несколько какашек, чтоб интереснее было
 poops = [
-    pygame.image.load('images/poo/poo1.png').convert_alpha(),
-    pygame.image.load('images/poo/poo2.png').convert_alpha(),
-    pygame.image.load('images/poo/poo3.png').convert_alpha(),
-    pygame.image.load('images/poo/poo4.png').convert_alpha(),
-    pygame.image.load('images/poo/poo5.png').convert_alpha(),
-    pygame.image.load('images/poo/poo6.png').convert_alpha(),
+    pygame.image.load('OneDrive/Документы/GitHub/game1/images/poo/poo1.png').convert_alpha(),
+    pygame.image.load('OneDrive/Документы/GitHub/game1/images/poo/poo2.png').convert_alpha(),
+    pygame.image.load('OneDrive/Документы/GitHub/game1/images/poo/poo3.png').convert_alpha(),
+    pygame.image.load('OneDrive/Документы/GitHub/game1/images/poo/poo4.png').convert_alpha(),
+    pygame.image.load('OneDrive/Документы/GitHub/game1/images/poo/poo5.png').convert_alpha(),
+    pygame.image.load('OneDrive/Документы/GitHub/game1/images/poo/poo6.png').convert_alpha(),
 ]
 
 # рандомно вытаскивает какашку
@@ -32,16 +32,16 @@ poop_list = []
 
 # голова чтобы думать, ноги чтобы ходить/ тут про ходить
 run_right = [
-    pygame.image.load('images/right/right_1.png').convert_alpha(),
-    pygame.image.load('images/right/right_2.png').convert_alpha(),
-    pygame.image.load('images/right/right_3.png').convert_alpha(),
-    pygame.image.load('images/right/right_4.png').convert_alpha(),
+    pygame.image.load('OneDrive/Документы/GitHub/game1/images/right/right_1.png').convert_alpha(),
+    pygame.image.load('OneDrive/Документы/GitHub/game1/images/right/right_2.png').convert_alpha(),
+    pygame.image.load('OneDrive/Документы/GitHub/game1/images/right/right_3.png').convert_alpha(),
+    pygame.image.load('OneDrive/Документы/GitHub/game1/images/right/right_4.png').convert_alpha(),
 ]
 run_left = [
-    pygame.image.load('images/left/left_1.png').convert_alpha(),
-    pygame.image.load('images/left/left_2.png').convert_alpha(),
-    pygame.image.load('images/left/left_3.png').convert_alpha(),
-    pygame.image.load('images/left/left_4.png').convert_alpha(),
+    pygame.image.load('OneDrive/Документы/GitHub/game1/images/left/left_1.png').convert_alpha(),
+    pygame.image.load('OneDrive/Документы/GitHub/game1/images/left/left_2.png').convert_alpha(),
+    pygame.image.load('OneDrive/Документы/GitHub/game1/images/left/left_3.png').convert_alpha(),
+    pygame.image.load('OneDrive/Документы/GitHub/game1/images/left/left_4.png').convert_alpha(),
 ]
 
 # начальная установка игрового тела
@@ -57,7 +57,7 @@ player_animation_count = 0
 bg_x = 0
 
 # внутренний звук, но я его послал
-background_sound = pygame.mixer.Sound('sounds/fon.mp3')
+background_sound = pygame.mixer.Sound('OneDrive/Документы/GitHub/game1/sounds/fon.mp3')
 # background_sound.play()
 
 # спавнер какашек
@@ -65,14 +65,14 @@ poop_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(poop_timer, 3500)
 
 # типа блок шрифтов и надписей
-label = pygame.font.Font('fonts/Impact.ttf', 80)
+label = pygame.font.Font('OneDrive/Документы/GitHub/game1/fonts/Impact.ttf', 80)
 lose_label = label.render('ЛОХ!', False, (255, 0, 0))
 restar_label = label.render('не обосраться снова', False, (255, 100, 0))
 restar_label_rect = restar_label.get_rect(topleft=(420, 300))
 
 # патроны (туалетка)
 bullets_left = 5
-bullet = pygame.image.load('images/bulet.png').convert_alpha()
+bullet = pygame.image.load('OneDrive/Документы/GitHub/game1/images/bulet.png').convert_alpha()
 bullets = []
 
 gameplay = True
